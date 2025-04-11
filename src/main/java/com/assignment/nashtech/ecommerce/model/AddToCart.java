@@ -26,18 +26,14 @@ public class AddToCart {
     @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "added_at")
-    private LocalDateTime addedAt;
-
     public AddToCart() {
     }
 
-    public AddToCart(int addToCartId, int userId, int productId, int quantity, LocalDateTime addedAt) {
+    public AddToCart(int addToCartId, int userId, int productId, int quantity) {
         this.addToCartId = addToCartId;
         this.userId = userId;
         this.productId = productId;
         this.quantity = quantity;
-        this.addedAt = addedAt;
     }
 
     public int getAddToCartId() {
@@ -74,14 +70,6 @@ public class AddToCart {
         this.quantity = quantity;
     }
 
-    public LocalDateTime getAddedAt() {
-        return addedAt;
-    }
-
-    public void setAddedAt(LocalDateTime addedAt) {
-        this.addedAt = addedAt;
-    }
-
     @Override
     public String toString() {
         return "AddToCart{" +
@@ -89,7 +77,6 @@ public class AddToCart {
                 ", userId=" + userId +
                 ", productId=" + productId +
                 ", quantity=" + quantity +
-                ", addedAt=" + addedAt +
                 '}';
     }
 }

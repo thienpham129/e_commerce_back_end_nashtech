@@ -53,13 +53,13 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "Reviews", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Review> userReviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "Orders", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Order> userOrders = new ArrayList<>();
 
-    @OneToMany(mappedBy = "AddToCarts", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<AddToCart> userAddToCarts = new ArrayList<>();
 
     public User() {

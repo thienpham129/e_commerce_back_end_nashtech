@@ -16,12 +16,12 @@ public class OrderItem {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    private int orderId;
+    private Order order;
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
-    private int productId;
+    private Product product;
 
     @Column(name = "quantity")
     private int quantity;
@@ -36,10 +36,10 @@ public class OrderItem {
     public OrderItem() {
     }
 
-    public OrderItem(int orderItemsId, int orderId, int productId, int quantity, double price, LocalDateTime createdAt) {
+    public OrderItem(int orderItemsId, Order order, Product product, int quantity, double price, LocalDateTime createdAt) {
         this.orderItemsId = orderItemsId;
-        this.orderId = orderId;
-        this.productId = productId;
+        this.order = order;
+        this.product = product;
         this.quantity = quantity;
         this.price = price;
         this.createdAt = createdAt;
@@ -53,22 +53,20 @@ public class OrderItem {
         this.orderItemsId = orderItemsId;
     }
 
-    @NotNull
-    public int getOrderId() {
-        return orderId;
+    public @NotNull Order getOrder() {
+        return order;
     }
 
-    public void setOrderId(@NotNull int orderId) {
-        this.orderId = orderId;
+    public void setOrder(@NotNull Order order) {
+        this.order = order;
     }
 
-    @NotNull
-    public int getProductId() {
-        return productId;
+    public @NotNull Product getProduct() {
+        return product;
     }
 
-    public void setProductId(@NotNull int productId) {
-        this.productId = productId;
+    public void setProduct(@NotNull Product product) {
+        this.product = product;
     }
 
     public int getQuantity() {
@@ -99,8 +97,8 @@ public class OrderItem {
     public String toString() {
         return "OrderItem{" +
                 "orderItemsId=" + orderItemsId +
-                ", orderId=" + orderId +
-                ", productId=" + productId +
+                ", order=" + order +
+                ", product=" + product +
                 ", quantity=" + quantity +
                 ", price=" + price +
                 ", createdAt=" + createdAt +

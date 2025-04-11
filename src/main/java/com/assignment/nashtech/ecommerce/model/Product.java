@@ -40,10 +40,10 @@ public class Product {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "Reviews", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Review> productReviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "AddToCart", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<AddToCart> productAddToCarts = new ArrayList<>();
 
     public Product() {

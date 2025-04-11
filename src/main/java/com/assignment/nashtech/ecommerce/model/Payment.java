@@ -18,7 +18,7 @@ public class Payment {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    private int orderId;
+    private Order order;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_method")
@@ -35,9 +35,9 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(int paymentId, int orderId, PaymentMethod paymentMethod, PaymentStatus paymentStatus, LocalDateTime paidAt) {
+    public Payment(int paymentId, Order order, PaymentMethod paymentMethod, PaymentStatus paymentStatus, LocalDateTime paidAt) {
         this.paymentId = paymentId;
-        this.orderId = orderId;
+        this.order = order;
         this.paymentMethod = paymentMethod;
         this.paymentStatus = paymentStatus;
         this.paidAt = paidAt;
@@ -51,13 +51,12 @@ public class Payment {
         this.paymentId = paymentId;
     }
 
-    @NotNull
-    public int getOrderId() {
-        return orderId;
+    public @NotNull Order getOrder() {
+        return order;
     }
 
-    public void setOrderId(@NotNull int orderId) {
-        this.orderId = orderId;
+    public void setOrder(@NotNull Order order) {
+        this.order = order;
     }
 
     public PaymentMethod getPaymentMethod() {
@@ -88,7 +87,7 @@ public class Payment {
     public String toString() {
         return "Payment{" +
                 "paymentId=" + paymentId +
-                ", orderId=" + orderId +
+                ", order=" + order +
                 ", paymentMethod=" + paymentMethod +
                 ", paymentStatus=" + paymentStatus +
                 ", paidAt=" + paidAt +

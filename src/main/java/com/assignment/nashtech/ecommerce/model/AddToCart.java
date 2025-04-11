@@ -16,12 +16,12 @@ public class AddToCart {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private int userId;
+    private User user;
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
-    private int productId;
+    private Product product;
 
     @Column(name = "quantity")
     private int quantity;
@@ -29,10 +29,10 @@ public class AddToCart {
     public AddToCart() {
     }
 
-    public AddToCart(int addToCartId, int userId, int productId, int quantity) {
+    public AddToCart(int addToCartId, User user, Product product, int quantity) {
         this.addToCartId = addToCartId;
-        this.userId = userId;
-        this.productId = productId;
+        this.user = user;
+        this.product = product;
         this.quantity = quantity;
     }
 
@@ -44,22 +44,20 @@ public class AddToCart {
         this.addToCartId = addToCartId;
     }
 
-    @NotNull
-    public int getUserId() {
-        return userId;
+    public @NotNull User getUser() {
+        return user;
     }
 
-    public void setUserId(@NotNull int userId) {
-        this.userId = userId;
+    public void setUser(@NotNull User user) {
+        this.user = user;
     }
 
-    @NotNull
-    public int getProductId() {
-        return productId;
+    public @NotNull Product getProduct() {
+        return product;
     }
 
-    public void setProductId(@NotNull int productId) {
-        this.productId = productId;
+    public void setProduct(@NotNull Product product) {
+        this.product = product;
     }
 
     public int getQuantity() {
@@ -74,8 +72,8 @@ public class AddToCart {
     public String toString() {
         return "AddToCart{" +
                 "addToCartId=" + addToCartId +
-                ", userId=" + userId +
-                ", productId=" + productId +
+                ", user=" + user +
+                ", product=" + product +
                 ", quantity=" + quantity +
                 '}';
     }

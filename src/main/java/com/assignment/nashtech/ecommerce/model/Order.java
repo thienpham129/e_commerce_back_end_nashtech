@@ -2,7 +2,6 @@ package com.assignment.nashtech.ecommerce.model;
 
 import com.assignment.nashtech.ecommerce.enums.OrderStatus;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
@@ -21,7 +20,7 @@ public class Order {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private int userId;
+    private User user;
 
     @Column(name = "order_date")
     private LocalDateTime orderDate;
@@ -36,27 +35,27 @@ public class Order {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "OrderItems", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderOrderItems = new ArrayList<>();
 
-    @OneToMany(mappedBy = "Payments", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<Payment> orderPayments = new ArrayList<>();
 
     public Order() {
     }
 
-    public Order(int orderId, int userId, LocalDateTime orderDate, double totalAmount, OrderStatus orderStatus, LocalDateTime updatedAt) {
+    public Order(int orderId, User user, LocalDateTime orderDate, double totalAmount, OrderStatus orderStatus, LocalDateTime updatedAt) {
         this.orderId = orderId;
-        this.userId = userId;
+        this.user = user;
         this.orderDate = orderDate;
         this.totalAmount = totalAmount;
         this.orderStatus = orderStatus;
         this.updatedAt = updatedAt;
     }
 
-    public Order(int orderId, int userId, LocalDateTime orderDate, double totalAmount, OrderStatus orderStatus, LocalDateTime updatedAt, List<OrderItem> orderOrderItems, List<Payment> orderPayments) {
+    public Order(int orderId, User user, LocalDateTime orderDate, double totalAmount, OrderStatus orderStatus, LocalDateTime updatedAt, List<OrderItem> orderOrderItems, List<Payment> orderPayments) {
         this.orderId = orderId;
-        this.userId = userId;
+        this.user = user;
         this.orderDate = orderDate;
         this.totalAmount = totalAmount;
         this.orderStatus = orderStatus;
@@ -73,13 +72,12 @@ public class Order {
         this.orderId = orderId;
     }
 
-    @NotNull
-    public int getUserId() {
-        return userId;
+    public @NotNull User getUser() {
+        return user;
     }
 
-    public void setUserId(@NotNull int userId) {
-        this.userId = userId;
+    public void setUser(@NotNull User user) {
+        this.user = user;
     }
 
     public LocalDateTime getOrderDate() {
@@ -134,7 +132,7 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "orderId=" + orderId +
-                ", userId=" + userId +
+                ", user=" + user +
                 ", orderDate=" + orderDate +
                 ", totalAmount=" + totalAmount +
                 ", orderStatus=" + orderStatus +

@@ -17,13 +17,13 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @NotNull
-    private int userId;
+    private User user;
 
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
-    private int productId;
+    private Product product;
 
 
     @Column(name = "rating")
@@ -42,10 +42,10 @@ public class Review {
     public Review() {
     }
 
-    public Review(int reviewId, int userId, int productId, int rating, String comment, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Review(int reviewId, User user, Product product, int rating, String comment, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.reviewId = reviewId;
-        this.userId = userId;
-        this.productId = productId;
+        this.user = user;
+        this.product = product;
         this.rating = rating;
         this.comment = comment;
         this.createdAt = createdAt;
@@ -60,22 +60,20 @@ public class Review {
         this.reviewId = reviewId;
     }
 
-    @NotNull
-    public int getUserId() {
-        return userId;
+    public @NotNull User getUser() {
+        return user;
     }
 
-    public void setUserId(@NotNull int userId) {
-        this.userId = userId;
+    public void setUser(@NotNull User user) {
+        this.user = user;
     }
 
-    @NotNull
-    public int getProductId() {
-        return productId;
+    public @NotNull Product getProduct() {
+        return product;
     }
 
-    public void setProductId(@NotNull int productId) {
-        this.productId = productId;
+    public void setProduct(@NotNull Product product) {
+        this.product = product;
     }
 
     public int getRating() {
@@ -114,8 +112,8 @@ public class Review {
     public String toString() {
         return "Review{" +
                 "reviewId=" + reviewId +
-                ", userId=" + userId +
-                ", productId=" + productId +
+                ", user=" + user +
+                ", product=" + product +
                 ", rating=" + rating +
                 ", comment='" + comment + '\'' +
                 ", createdAt=" + createdAt +

@@ -26,7 +26,7 @@ public class Category {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<Category> categoryProducts = new ArrayList<>();
+    private List<Product> categoryProducts = new ArrayList<>();
 
     public Category() {
     }
@@ -38,7 +38,7 @@ public class Category {
         this.updatedAt = updatedAt;
     }
 
-    public Category(int categoryId, String categoryName, LocalDateTime createdAt, LocalDateTime updatedAt, List<Category> categoryProducts) {
+    public Category(int categoryId, String categoryName, LocalDateTime createdAt, LocalDateTime updatedAt, List<Product> categoryProducts) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.createdAt = createdAt;
@@ -78,11 +78,11 @@ public class Category {
         this.updatedAt = updatedAt;
     }
 
-    public List<Category> getCategoryProducts() {
+    public List<Product> getCategoryProducts() {
         return categoryProducts;
     }
 
-    public void setCategoryProducts(List<Category> categoryProducts) {
+    public void setCategoryProducts(List<Product> categoryProducts) {
         this.categoryProducts = categoryProducts;
     }
 

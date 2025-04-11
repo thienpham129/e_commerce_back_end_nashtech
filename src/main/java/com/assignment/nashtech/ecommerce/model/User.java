@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,7 +39,7 @@ public class User {
 
     @Past(message = "Birth date must be in the pass")
     @Column(name = "birth_date")
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
@@ -65,7 +66,7 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String userName, String email, String firstName, String lastName, Date birthDate, UserRole userRole, String avatarUrl, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public User(int userId, String userName, String email, String firstName, String lastName, LocalDate birthDate, UserRole userRole, String avatarUrl, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.userId = userId;
         this.userName = userName;
         this.email = email;
@@ -78,7 +79,7 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    public User(int userId, String userName, String email, String firstName, String lastName, Date birthDate, UserRole userRole, String avatarUrl, LocalDateTime createdAt, LocalDateTime updatedAt, List<Review> userReviews, List<Order> userOrders, List<AddToCart> userAddToCarts) {
+    public User(int userId, String userName, String email, String firstName, String lastName, LocalDate birthDate, UserRole userRole, String avatarUrl, LocalDateTime createdAt, LocalDateTime updatedAt, List<Review> userReviews, List<Order> userOrders, List<AddToCart> userAddToCarts) {
         this.userId = userId;
         this.userName = userName;
         this.email = email;
@@ -134,11 +135,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public @Past(message = "Birth date must be in the pass") Date getBirthDate() {
+    public @Past(message = "Birth date must be in the pass") LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(@Past(message = "Birth date must be in the pass") Date birthDate) {
+    public void setBirthDate(@Past(message = "Birth date must be in the pass") LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 

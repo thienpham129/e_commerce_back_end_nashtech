@@ -1,4 +1,4 @@
-package model;
+package com.assignment.nashtech.ecommerce.model;
 
 import java.time.LocalDateTime;
 

@@ -1,6 +1,7 @@
 package com.assignment.nashtech.ecommerce.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,11 @@ public class Product {
     @Size(max = 256)
     @Column(name = "description")
     private String description;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
     @Column(name = "quantity")
     private int quantity;

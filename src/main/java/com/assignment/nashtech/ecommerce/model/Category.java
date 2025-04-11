@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Categories")
@@ -23,6 +25,9 @@ public class Category {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Category> categoryProducts = new ArrayList<>();
+
     public Category() {
     }
 
@@ -31,6 +36,14 @@ public class Category {
         this.categoryName = categoryName;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public Category(int categoryId, String categoryName, LocalDateTime createdAt, LocalDateTime updatedAt, List<Category> categoryProducts) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.categoryProducts = categoryProducts;
     }
 
     public int getCategoryId() {
@@ -65,6 +78,14 @@ public class Category {
         this.updatedAt = updatedAt;
     }
 
+    public List<Category> getCategoryProducts() {
+        return categoryProducts;
+    }
+
+    public void setCategoryProducts(List<Category> categoryProducts) {
+        this.categoryProducts = categoryProducts;
+    }
+
     @Override
     public String toString() {
         return "Category{" +
@@ -72,6 +93,7 @@ public class Category {
                 ", categoryName='" + categoryName + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", categoryProducts=" + categoryProducts +
                 '}';
     }
 }

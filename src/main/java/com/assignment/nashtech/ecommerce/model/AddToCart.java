@@ -1,47 +1,69 @@
 package com.assignment.nashtech.ecommerce.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "AddToCarts")
 public class AddToCart {
-    private int add_to_cart;
-    private int user_id;
-    private int product_id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int addToCartId;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private int userId;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private int productId;
+
+    @Column(name = "quantity")
     private int quantity;
-    private LocalDateTime added_at;
+
+    @Column(name = "added_at")
+    private LocalDateTime addedAt;
 
     public AddToCart() {
     }
 
-    public AddToCart(int add_to_cart, int user_id, int product_id, int quantity, LocalDateTime added_at) {
-        this.add_to_cart = add_to_cart;
-        this.user_id = user_id;
-        this.product_id = product_id;
+    public AddToCart(int addToCartId, int userId, int productId, int quantity, LocalDateTime addedAt) {
+        this.addToCartId = addToCartId;
+        this.userId = userId;
+        this.productId = productId;
         this.quantity = quantity;
-        this.added_at = added_at;
+        this.addedAt = addedAt;
     }
 
-    public int getAdd_to_cart() {
-        return add_to_cart;
+    public int getAddToCartId() {
+        return addToCartId;
     }
 
-    public void setAdd_to_cart(int add_to_cart) {
-        this.add_to_cart = add_to_cart;
+    public void setAddToCartId(int addToCartId) {
+        this.addToCartId = addToCartId;
     }
 
-    public int getUser_id() {
-        return user_id;
+    @NotNull
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(@NotNull int userId) {
+        this.userId = userId;
     }
 
-    public int getProduct_id() {
-        return product_id;
+    @NotNull
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+    public void setProductId(@NotNull int productId) {
+        this.productId = productId;
     }
 
     public int getQuantity() {
@@ -52,22 +74,22 @@ public class AddToCart {
         this.quantity = quantity;
     }
 
-    public LocalDateTime getAdded_at() {
-        return added_at;
+    public LocalDateTime getAddedAt() {
+        return addedAt;
     }
 
-    public void setAdded_at(LocalDateTime added_at) {
-        this.added_at = added_at;
+    public void setAddedAt(LocalDateTime addedAt) {
+        this.addedAt = addedAt;
     }
 
     @Override
     public String toString() {
         return "AddToCart{" +
-                "add_to_cart=" + add_to_cart +
-                ", user_id=" + user_id +
-                ", product_id=" + product_id +
+                "addToCartId=" + addToCartId +
+                ", userId=" + userId +
+                ", productId=" + productId +
                 ", quantity=" + quantity +
-                ", added_at=" + added_at +
+                ", addedAt=" + addedAt +
                 '}';
     }
 }

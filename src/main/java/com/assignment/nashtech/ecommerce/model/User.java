@@ -41,13 +41,13 @@ public class User {
     private Date birthDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "userRole")
+    @Column(name = "role")
     private UserRole userRole;
 
     @Column(name = "avatar_url")
     private String avatarUrl;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")

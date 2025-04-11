@@ -34,7 +34,7 @@ public class Product {
     @Column(name = "is_active")
     private boolean isActive;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")

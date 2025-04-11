@@ -29,7 +29,7 @@ public class OrderItem {
     @Column(name = "price")
     private double price;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
 

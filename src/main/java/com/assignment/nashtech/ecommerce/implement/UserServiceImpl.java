@@ -52,7 +52,6 @@ public class UserServiceImpl implements UserService {
             u.setBirthDate(user.getBirthDate());
             u.setUserRole(user.getUserRole());
             u.setAvatarUrl(user.getAvatarUrl());
-            u.setCreatedAt(user.getCreatedAt());
             u.setUpdatedAt(user.getUpdatedAt());
             return userRepository.save(u);
         }

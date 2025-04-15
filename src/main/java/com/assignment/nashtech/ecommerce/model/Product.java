@@ -56,6 +56,7 @@ public class Product {
     private List<Review> productReviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<AddToCart> productAddToCarts = new ArrayList<>();
 
     public Product() {

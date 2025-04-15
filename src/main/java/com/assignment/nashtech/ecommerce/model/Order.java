@@ -3,6 +3,8 @@ package com.assignment.nashtech.ecommerce.model;
 import com.assignment.nashtech.ecommerce.enums.OrderStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,7 +24,8 @@ public class Order {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "order_date")
+    @Column(name = "order_date", updatable = false)
+    @CreationTimestamp
     private LocalDateTime orderDate;
 
     @Column(name = "total_amount")
@@ -33,6 +36,7 @@ public class Order {
     private OrderStatus orderStatus;
 
     @Column(name = "updated_at")
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)

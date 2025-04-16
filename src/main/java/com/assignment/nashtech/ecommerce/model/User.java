@@ -63,6 +63,7 @@ public class User {
     private List<Order> userOrders = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<AddToCart> userAddToCarts = new ArrayList<>();
 
     public User() {

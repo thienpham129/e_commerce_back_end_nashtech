@@ -45,6 +45,7 @@ public class Order {
     private List<OrderItem> orderOrderItems = new ArrayList<>();
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Payment> orderPayments = new ArrayList<>();
 
     public Order() {

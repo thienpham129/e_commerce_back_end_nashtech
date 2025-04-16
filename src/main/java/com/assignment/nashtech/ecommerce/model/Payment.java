@@ -4,6 +4,7 @@ import com.assignment.nashtech.ecommerce.enums.PaymentMethod;
 import com.assignment.nashtech.ecommerce.enums.PaymentStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -29,7 +30,8 @@ public class Payment {
     private PaymentStatus paymentStatus;
 
 
-    @Column(name = "paid_at")
+    @Column(name = "paid_at", updatable = false)
+    @CreationTimestamp
     private LocalDateTime paidAt;
 
     public Payment() {

@@ -12,6 +12,8 @@ public interface ProductService {
 
     Optional<Product> getProductById(@PathVariable int productId);
 
+    List<Product> getProductByCategoryId(int categoryId);
+
     Product saveProduct(ProductDTO productDTO);
 
     Product updateProductById(int productId, ProductDTO productDTO);

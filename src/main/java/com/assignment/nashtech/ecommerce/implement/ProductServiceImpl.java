@@ -31,6 +31,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getProductByCategoryId(int categoryId){
+        return productRepository.findByCategoryCategoryId(categoryId);
+    }
+
+    @Override
     public Product saveProduct(ProductDTO productDTO) {
         Category category = categoryRepository.findById(productDTO.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not Found"));
 
@@ -61,6 +66,8 @@ public class ProductServiceImpl implements ProductService {
         }
         return null;
     }
+
+
 
     @Override
     public void deleteProductById(int productId) {

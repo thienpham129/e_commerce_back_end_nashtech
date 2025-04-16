@@ -25,6 +25,11 @@ public class ProductController {
         return productService.getProductById(productId);
     }
 
+    @GetMapping("/category/{categoryId}")
+    public List<Product> getProductByCategoryId(@PathVariable int categoryId){
+        return productService.getProductByCategoryId(categoryId);
+    }
+
     @PostMapping("/")
     public Product createProduct(@RequestBody ProductDTO productDTO){
         return productService.saveProduct(productDTO);

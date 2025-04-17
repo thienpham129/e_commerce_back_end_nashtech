@@ -5,6 +5,7 @@ import com.assignment.nashtech.ecommerce.model.Product;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface ProductService {
@@ -15,6 +16,10 @@ public interface ProductService {
     List<Product> getProductByCategoryId(int categoryId);
 
     List<Product> getFeaturedProducts();
+
+    Map<Integer, Double> getAverageRatings();
+
+    Double getAverageRatingByProductId(Integer productId);
 
     List<Product> saveAllProducts(List<ProductDTO> productDTOs);
 

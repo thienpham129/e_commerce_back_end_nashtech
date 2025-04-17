@@ -5,13 +5,12 @@ import com.assignment.nashtech.ecommerce.model.Category;
 import com.assignment.nashtech.ecommerce.model.Product;
 import com.assignment.nashtech.ecommerce.repository.CategoryRepository;
 import com.assignment.nashtech.ecommerce.repository.ProductRepository;
+import com.assignment.nashtech.ecommerce.repository.ReviewRepository;
 import com.assignment.nashtech.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -21,9 +20,13 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private final CategoryRepository categoryRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository) {
+    @Autowired
+    private final ReviewRepository reviewRepository;
+
+    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, ReviewRepository reviewRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     @Override
@@ -44,6 +47,26 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getFeaturedProducts() {
         return productRepository.findByIsFeaturedTrue();
+    }
+
+    @Override
+    public Map<Integer, Double> getAverageRatings(){
+        List<Object[]> results = reviewRepository.findAverageRatingForProducts();
+        Map<Integer, Double> averageRatings = new HashMap<>();
+
+        for (Object[] result: results){
+            Integer productId = (Integer) result[0];
+            Double averageRating = (Double) result[1];
+            averageRatings.put(productId, averageRating);
+        }
+
+        return averageRatings;
+    }
+
+    @Override
+    public Double getAverageRatingByProductId(Integer productId){
+        Double rating = reviewRepository.findAverageRatingsByProductId(productId);
+        return rating != null ? rating : 0.0;
     }
 
     @Override

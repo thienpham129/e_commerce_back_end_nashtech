@@ -29,6 +29,11 @@ public class CategoryController {
         return categoryService.saveCategory(category);
     }
 
+    @PostMapping("/saveAll")
+    public List<Category> createMultipleCategories(@RequestBody List<Category> categories){
+        return categoryService.saveAll(categories);
+    }
+
     @PutMapping("/{categoryId}")
     public Category updateCategoryById(@RequestBody Category category, @PathVariable int categoryId) {
         return categoryService.updateCategoryById(categoryId, category);

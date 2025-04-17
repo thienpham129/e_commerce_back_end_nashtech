@@ -11,6 +11,8 @@ public interface CategoryService {
 
     Category saveCategory(Category category);
 
+    List<Category> saveAll(List<Category> categories);
+
     Category updateCategoryById(int categoryId, Category category);
 
     void deleteCategoryById(int categoryId);

@@ -31,6 +31,11 @@ public class CategoryImpl implements CategoryService {
     }
 
     @Override
+    public List<Category> saveAll(List<Category> categories){
+        return categoryRepository.saveAll(categories);
+    }
+
+    @Override
     public Category updateCategoryById(int categoryId, Category category){
         Optional<Category> categoryExisting = categoryRepository.findById(categoryId);
         if (categoryExisting.isPresent()){

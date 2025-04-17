@@ -1,5 +1,6 @@
 package com.assignment.nashtech.ecommerce.service;
 
+import com.assignment.nashtech.ecommerce.dto.UserLoginDTO;
 import com.assignment.nashtech.ecommerce.dto.UserRegisterDTO;
 import com.assignment.nashtech.ecommerce.model.User;
 
@@ -17,4 +18,6 @@ public interface UserService {
     void deleteUserById(int userId);
 
     User register(UserRegisterDTO userRegisterDTO);
+
+    boolean authenticate(UserLoginDTO userLoginDTO);
 }

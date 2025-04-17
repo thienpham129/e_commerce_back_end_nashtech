@@ -1,6 +1,7 @@
 package com.assignment.nashtech.ecommerce.implement;
 
 import com.assignment.nashtech.ecommerce.configuration.PasswordEncoderConfiguration;
+import com.assignment.nashtech.ecommerce.dto.UserLoginDTO;
 import com.assignment.nashtech.ecommerce.dto.UserRegisterDTO;
 import com.assignment.nashtech.ecommerce.exception.ResourceNotFoundException;
 import com.assignment.nashtech.ecommerce.exception.UserRegistrationException;
@@ -8,6 +9,7 @@ import com.assignment.nashtech.ecommerce.model.User;
 import com.assignment.nashtech.ecommerce.repository.UserRepository;
 import com.assignment.nashtech.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +23,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoderConfiguration passwordEncoderConfiguration;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getAllUsers() {
@@ -83,5 +88,12 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userRegisterDTO.getEmail());
         user.setPassword(passwordEncoderConfiguration.passwordEncoder().encode(userRegisterDTO.getPassword()));
         return userRepository.save(user);
+    }
+
+    @Override
+    public boolean authenticate(UserLoginDTO userLoginDTO){
+        User user = userRepository.findByUserName(userLoginDTO.getUsername()).orElseThrow(() -> new ResourceNotFoundException(userLoginDTO.getUsername() + " not Found"));
+
+        return passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword());
     }
 }

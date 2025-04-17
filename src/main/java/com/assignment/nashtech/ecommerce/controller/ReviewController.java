@@ -31,6 +31,11 @@ public class ReviewController {
         return reviewService.saveReview(reviewDTO);
     }
 
+    @PostMapping("/saveAllReviews")
+    public List<Review> createMultipleReviews(@RequestBody List<ReviewDTO> reviewDTOs){
+        return reviewService.saveAllReviews(reviewDTOs);
+    }
+
     @PutMapping("/{reviewId}")
     public Review UpdateReviewById(@PathVariable int reviewId, @RequestBody ReviewDTO reviewDTO) {
         return reviewService.updateReviewById(reviewId, reviewDTO);

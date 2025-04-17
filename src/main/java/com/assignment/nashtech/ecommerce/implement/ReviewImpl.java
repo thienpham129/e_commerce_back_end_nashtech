@@ -1,6 +1,7 @@
 package com.assignment.nashtech.ecommerce.implement;
 
 import com.assignment.nashtech.ecommerce.dto.ReviewDTO;
+import com.assignment.nashtech.ecommerce.exception.ResourceNotFoundException;
 import com.assignment.nashtech.ecommerce.model.Product;
 import com.assignment.nashtech.ecommerce.model.Review;
 import com.assignment.nashtech.ecommerce.model.User;
@@ -11,6 +12,7 @@ import com.assignment.nashtech.ecommerce.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +35,25 @@ public class ReviewImpl implements ReviewService {
     @Override
     public Optional<Review> getReviewById(int reviewId) {
         return reviewRepository.findById(reviewId);
+    }
+
+    @Override
+    public List<Review> saveAllReviews(List<ReviewDTO> reviewDTOs) {
+        List<Review> reviews = new ArrayList<>();
+
+        for (ReviewDTO reviewDTO : reviewDTOs) {
+            User user = userRepository.findById(reviewDTO.getUserId()).orElseThrow(() -> new ResourceNotFoundException("User not Found"));
+            Product product = productRepository.findById(reviewDTO.getProductId()).orElseThrow(() -> new ResourceNotFoundException("Product not Found"));
+
+            Review review = new Review();
+            review.setUser(user);
+            review.setProduct(product);
+            review.setRating(reviewDTO.getRating());
+            review.setComment(reviewDTO.getComment());
+
+            reviews.add(review);
+        }
+        return reviewRepository.saveAll(reviews);
     }
 
     @Override

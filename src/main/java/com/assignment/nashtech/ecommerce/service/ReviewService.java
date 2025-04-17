@@ -11,6 +11,8 @@ public interface ReviewService {
 
     Optional<Review> getReviewById(int reviewId);
 
+    List<Review> saveAllReviews(List<ReviewDTO> reviewDTOs);
+
     Review saveReview(ReviewDTO reviewDTO);
 
     Review updateReviewById(int reviewId, ReviewDTO reviewDTO);

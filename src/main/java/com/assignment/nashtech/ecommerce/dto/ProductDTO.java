@@ -9,17 +9,21 @@ public class ProductDTO {
     private String description;
     private int quantity;
     private int categoryId;
+    private boolean isActive = true;
+    private boolean isFeatured = false;
 
     public ProductDTO() {
     }
 
-    public ProductDTO(String productName, String imageUrl, int price, String description, int quantity, int categoryId) {
+    public ProductDTO(String productName, String imageUrl, int price, String description, int quantity, int categoryId, boolean isActive, boolean isFeatured) {
         this.productName = productName;
         this.imageUrl = imageUrl;
         this.price = price;
         this.description = description;
         this.quantity = quantity;
         this.categoryId = categoryId;
+        this.isActive = isActive;
+        this.isFeatured = isFeatured;
     }
 
     public String getProductName() {
@@ -62,6 +66,22 @@ public class ProductDTO {
         this.quantity = quantity;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public boolean isFeatured() {
+        return isFeatured;
+    }
+
+    public void setFeatured(boolean featured) {
+        isFeatured = featured;
+    }
+
     public int getCategoryId() {
         return categoryId;
     }
@@ -79,6 +99,8 @@ public class ProductDTO {
                 ", description='" + description + '\'' +
                 ", quantity=" + quantity +
                 ", categoryId=" + categoryId +
+                ", isActive=" + isActive +
+                ", isFeatured=" + isFeatured +
                 '}';
     }
 }

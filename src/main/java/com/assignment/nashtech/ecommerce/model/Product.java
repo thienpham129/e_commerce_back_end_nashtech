@@ -41,7 +41,10 @@ public class Product {
     private int quantity;
 
     @Column(name = "is_active")
-    private boolean isActive;
+    private boolean isActive = true;
+
+    @Column(name = "is_featured")
+    private boolean isFeatured = false;
 
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
@@ -62,26 +65,16 @@ public class Product {
     public Product() {
     }
 
-    public Product(int productId, String productName, String imageUrl, int price, String description, int quantity, boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Product(int productId, String productName, String imageUrl, int price, String description, Category category, int quantity, boolean isActive, boolean isFeatured, LocalDateTime createdAt, LocalDateTime updatedAt, List<Review> productReviews, List<AddToCart> productAddToCarts) {
         this.productId = productId;
         this.productName = productName;
         this.imageUrl = imageUrl;
         this.price = price;
         this.description = description;
+        this.category = category;
         this.quantity = quantity;
         this.isActive = isActive;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public Product(int productId, String productName, String imageUrl, int price, String description, int quantity, boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt, List<Review> productReviews, List<AddToCart> productAddToCarts) {
-        this.productId = productId;
-        this.productName = productName;
-        this.imageUrl = imageUrl;
-        this.price = price;
-        this.description = description;
-        this.quantity = quantity;
-        this.isActive = isActive;
+        this.isFeatured = isFeatured;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.productReviews = productReviews;
@@ -142,6 +135,14 @@ public class Product {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public boolean isFeatured() {
+        return isFeatured;
+    }
+
+    public void setFeatured(boolean featured) {
+        isFeatured = featured;
     }
 
     public LocalDateTime getCreatedAt() {

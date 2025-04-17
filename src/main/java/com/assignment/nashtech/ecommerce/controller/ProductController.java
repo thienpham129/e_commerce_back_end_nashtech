@@ -1,6 +1,7 @@
 package com.assignment.nashtech.ecommerce.controller;
 
 import com.assignment.nashtech.ecommerce.dto.ProductDTO;
+import com.assignment.nashtech.ecommerce.model.Category;
 import com.assignment.nashtech.ecommerce.model.Product;
 import com.assignment.nashtech.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,19 @@ public class ProductController {
         return productService.getProductByCategoryId(categoryId);
     }
 
+    @GetMapping("/featured")
+    public List<Product> getFeaturedProducts(){
+        return productService.getFeaturedProducts();
+    }
+
     @PostMapping("/")
     public Product createProduct(@RequestBody ProductDTO productDTO){
         return productService.saveProduct(productDTO);
+    }
+
+    @PostMapping("/saveAllProducts")
+    public List<Product> createMultipleProducts(@RequestBody List<ProductDTO> productDTOS){
+        return productService.saveAllProducts(productDTOS);
     }
 
     @PutMapping("/{productId}")

@@ -14,6 +14,10 @@ public interface ProductService {
 
     List<Product> getProductByCategoryId(int categoryId);
 
+    List<Product> getFeaturedProducts();
+
+    List<Product> saveAllProducts(List<ProductDTO> productDTOs);
+
     Product saveProduct(ProductDTO productDTO);
 
     Product updateProductById(int productId, ProductDTO productDTO);

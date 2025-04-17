@@ -1,6 +1,9 @@
 package com.assignment.nashtech.ecommerce.implement;
 
+import com.assignment.nashtech.ecommerce.configuration.PasswordEncoderConfiguration;
+import com.assignment.nashtech.ecommerce.dto.UserRegisterDTO;
 import com.assignment.nashtech.ecommerce.exception.ResourceNotFoundException;
+import com.assignment.nashtech.ecommerce.exception.UserRegistrationException;
 import com.assignment.nashtech.ecommerce.model.User;
 import com.assignment.nashtech.ecommerce.repository.UserRepository;
 import com.assignment.nashtech.ecommerce.service.UserService;
@@ -15,6 +18,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoderConfiguration passwordEncoderConfiguration;
 
     @Override
     public List<User> getAllUsers() {
@@ -49,6 +55,7 @@ public class UserServiceImpl implements UserService {
             u.setEmail(user.getEmail());
             u.setFirstName(user.getFirstName());
             u.setLastName(user.getLastName());
+            u.setPassword(user.getPassword());
             u.setBirthDate(user.getBirthDate());
             u.setUserRole(user.getUserRole());
             u.setAvatarUrl(user.getAvatarUrl());
@@ -61,5 +68,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserById(int userId) {
         userRepository.deleteById(userId);
+    }
+
+    @Override
+    public User register( UserRegisterDTO userRegisterDTO) {
+        if (userRepository.findByUserName(userRegisterDTO.getUsername()).isPresent()) {
+            throw new UserRegistrationException.UsernameAlreadyExistsException(userRegisterDTO.getUsername());
+        }
+        if (userRepository.findByEmail(userRegisterDTO.getEmail()).isPresent()) {
+            throw new UserRegistrationException.EmailAlreadyExistsException(userRegisterDTO.getEmail());
+        }
+        User user = new User();
+        user.setUserName(userRegisterDTO.getUsername());
+        user.setEmail(userRegisterDTO.getEmail());
+        user.setPassword(passwordEncoderConfiguration.passwordEncoder().encode(userRegisterDTO.getPassword()));
+        return userRepository.save(user);
     }
 }

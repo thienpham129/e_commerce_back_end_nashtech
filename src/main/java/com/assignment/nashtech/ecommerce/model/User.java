@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,12 +24,17 @@ public class User {
     @NotNull
     @Size(max = 256)
     @Column(name = "username", nullable = false, length = 256)
-    private String userName;
+    private String userName = "User";
 
     @NotNull
     @Size(max = 256)
     @Column(name = "email", nullable = false, length = 256)
     private String email;
+
+    @NotNull
+    @Size(max = 256)
+    @Column(name = "password", nullable = false, length = 256)
+    private String password;
 
     @Size(max = 256)
     @Column(name = "first_name", length = 256)
@@ -49,9 +56,11 @@ public class User {
     private String avatarUrl;
 
     @Column(name = "created_at", updatable = false)
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -69,23 +78,11 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String userName, String email, String firstName, String lastName, LocalDate birthDate, UserRole userRole, String avatarUrl, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public User(int userId, String userName, String email, String password, String firstName, String lastName, LocalDate birthDate, UserRole userRole, String avatarUrl, LocalDateTime createdAt, LocalDateTime updatedAt, List<Review> userReviews, List<Order> userOrders, List<AddToCart> userAddToCarts) {
         this.userId = userId;
         this.userName = userName;
         this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.userRole = userRole;
-        this.avatarUrl = avatarUrl;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public User(int userId, String userName, String email, String firstName, String lastName, LocalDate birthDate, UserRole userRole, String avatarUrl, LocalDateTime createdAt, LocalDateTime updatedAt, List<Review> userReviews, List<Order> userOrders, List<AddToCart> userAddToCarts) {
-        this.userId = userId;
-        this.userName = userName;
-        this.email = email;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
@@ -120,6 +117,14 @@ public class User {
 
     public void setEmail(@NotNull @Size(max = 256) String email) {
         this.email = email;
+    }
+
+    public @NotNull @Size(max = 256) String getPassword() {
+        return password;
+    }
+
+    public void setPassword(@NotNull @Size(max = 256) String password) {
+        this.password = password;
     }
 
     public @Size(max = 256) String getFirstName() {
@@ -202,6 +207,8 @@ public class User {
         this.userAddToCarts = userAddToCarts;
     }
 
+
+
     @Override
     public String toString() {
         return "User{" +
@@ -219,5 +226,12 @@ public class User {
                 ", userOrders=" + userOrders +
                 ", userAddToCarts=" + userAddToCarts +
                 '}';
+    }
+
+    @PrePersist
+    public void prePersistRole(){
+        if (userRole == null){
+            userRole = UserRole.User;
+        }
     }
 }

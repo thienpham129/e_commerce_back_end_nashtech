@@ -1,5 +1,6 @@
 package com.assignment.nashtech.ecommerce.service;
 
+import com.assignment.nashtech.ecommerce.dto.UserRegisterDTO;
 import com.assignment.nashtech.ecommerce.model.User;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface UserService {
     User updateUserById(int userId, User user);
 
     void deleteUserById(int userId);
+
+    User register(UserRegisterDTO userRegisterDTO);
 }

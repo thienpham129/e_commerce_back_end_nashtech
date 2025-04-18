@@ -9,9 +9,12 @@ import com.assignment.nashtech.ecommerce.model.User;
 import com.assignment.nashtech.ecommerce.repository.UserRepository;
 import com.assignment.nashtech.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,5 +98,17 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUserName(userLoginDTO.getUsername()).orElseThrow(() -> new ResourceNotFoundException(userLoginDTO.getUsername() + " not Found"));
 
         return passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword());
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUserName(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not Found"));
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getUserName(),
+                user.getPassword(),
+                new ArrayList<>()
+        );
     }
 }

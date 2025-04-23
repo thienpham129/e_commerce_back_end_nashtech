@@ -7,11 +7,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
     List<User> getAllUsers();
 
     User getUserById(int userId);
+
+    Optional<User> findByUserName(String username);
 
     User saveUser(User user);
 
@@ -19,9 +22,15 @@ public interface UserService {
 
     void deleteUserById(int userId);
 
-    User register(UserRegisterDTO userRegisterDTO);
+//    User register(UserRegisterDTO userRegisterDTO);
 
-    boolean authenticate(UserLoginDTO userLoginDTO);
+//    boolean authenticate(UserLoginDTO userLoginDTO);
 
-    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+//    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+
+    boolean existByUserName(String userName);
+
+    boolean existByEmail(String email);
+
+    void save(User user);
 }

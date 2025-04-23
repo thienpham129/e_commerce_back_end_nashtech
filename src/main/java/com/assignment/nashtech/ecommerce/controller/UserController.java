@@ -4,17 +4,20 @@ import com.assignment.nashtech.ecommerce.model.User;
 import com.assignment.nashtech.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")  // <- thêm dòng này
 @RestController
 @RequestMapping("/users")
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
+    @GetMapping("/public")
+    @PreAuthorize("hasRole('Admin')")
     public List<User> getAll() {
         return userService.getAllUsers();
     }

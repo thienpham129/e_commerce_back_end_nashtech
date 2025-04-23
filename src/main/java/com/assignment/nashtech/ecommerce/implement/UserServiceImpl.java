@@ -1,20 +1,13 @@
 package com.assignment.nashtech.ecommerce.implement;
 
-import com.assignment.nashtech.ecommerce.configuration.PasswordEncoderConfiguration;
-import com.assignment.nashtech.ecommerce.dto.UserLoginDTO;
-import com.assignment.nashtech.ecommerce.dto.UserRegisterDTO;
 import com.assignment.nashtech.ecommerce.exception.ResourceNotFoundException;
-import com.assignment.nashtech.ecommerce.exception.UserRegistrationException;
 import com.assignment.nashtech.ecommerce.model.User;
 import com.assignment.nashtech.ecommerce.repository.UserRepository;
 import com.assignment.nashtech.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,11 +17,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoderConfiguration passwordEncoderConfiguration;
+//    @Autowired
+//    private PasswordEncoderConfiguration passwordEncoderConfiguration;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+//    @Autowired
+//    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getAllUsers() {
@@ -38,6 +31,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(int userId) {
         return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not exist with id: " + userId));
+    }
+
+    @Override
+    public Optional<User> findByUserName(String username) {
+        return userRepository.findByUserName(username);
     }
 
     @Override
@@ -78,37 +76,52 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(userId);
     }
 
+//    @Override
+//    public User register(UserRegisterDTO userRegisterDTO) {
+//        if (userRepository.findByUserName(userRegisterDTO.getUsername()).isPresent()) {
+//            throw new UserRegistrationException.UsernameAlreadyExistsException(userRegisterDTO.getUsername());
+//        }
+//        if (userRepository.findByEmail(userRegisterDTO.getEmail()).isPresent()) {
+//            throw new UserRegistrationException.EmailAlreadyExistsException(userRegisterDTO.getEmail());
+//        }
+//        User user = new User();
+//        user.setUserName(userRegisterDTO.getUsername());
+//        user.setEmail(userRegisterDTO.getEmail());
+//        user.setPassword(passwordEncoderConfiguration.passwordEncoder().encode(userRegisterDTO.getPassword()));
+//        return userRepository.save(user);
+//    }
+//
+//    @Override
+//    public boolean authenticate(UserLoginDTO userLoginDTO) {
+//        User user = userRepository.findByUserName(userLoginDTO.getUsername()).orElseThrow(() -> new ResourceNotFoundException(userLoginDTO.getUsername() + " not Found"));
+//
+//        return passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword());
+//    }
+//
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        User user = userRepository.findByUserName(username)
+//                .orElseThrow(() -> new ResourceNotFoundException("User not Found"));
+//
+//        return new org.springframework.security.core.userdetails.User(
+//                user.getUserName(),
+//                user.getPassword(),
+//                new ArrayList<>()
+//        );
+//    }
+
     @Override
-    public User register( UserRegisterDTO userRegisterDTO) {
-        if (userRepository.findByUserName(userRegisterDTO.getUsername()).isPresent()) {
-            throw new UserRegistrationException.UsernameAlreadyExistsException(userRegisterDTO.getUsername());
-        }
-        if (userRepository.findByEmail(userRegisterDTO.getEmail()).isPresent()) {
-            throw new UserRegistrationException.EmailAlreadyExistsException(userRegisterDTO.getEmail());
-        }
-        User user = new User();
-        user.setUserName(userRegisterDTO.getUsername());
-        user.setEmail(userRegisterDTO.getEmail());
-        user.setPassword(passwordEncoderConfiguration.passwordEncoder().encode(userRegisterDTO.getPassword()));
-        return userRepository.save(user);
+    public boolean existByUserName(String userName) {
+        return userRepository.existsByUserName(userName);
     }
 
     @Override
-    public boolean authenticate(UserLoginDTO userLoginDTO){
-        User user = userRepository.findByUserName(userLoginDTO.getUsername()).orElseThrow(() -> new ResourceNotFoundException(userLoginDTO.getUsername() + " not Found"));
-
-        return passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword());
+    public boolean existByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUserName(username)
-                .orElseThrow(() -> new ResourceNotFoundException("User not Found"));
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getUserName(),
-                user.getPassword(),
-                new ArrayList<>()
-        );
+    public void save(User user) {
+        userRepository.save(user);
     }
 }

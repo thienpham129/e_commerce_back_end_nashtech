@@ -10,38 +10,39 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/products")
 public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/")
+    @GetMapping("/public")
     public List<Product> getAllProduct() {
         return productService.getAllProducts();
     }
 
-    @GetMapping("/{productId}")
+    @GetMapping("/public/{productId}")
     public Optional<Product> getProductById(@PathVariable int productId) {
         return productService.getProductById(productId);
     }
 
-    @GetMapping("/category/{categoryId}")
+    @GetMapping("/public/category/{categoryId}")
     public List<Product> getProductByCategoryId(@PathVariable int categoryId) {
         return productService.getProductByCategoryId(categoryId);
     }
 
-    @GetMapping("/featured")
+    @GetMapping("/public/featured")
     public List<Product> getFeaturedProducts() {
         return productService.getFeaturedProducts();
     }
 
-    @GetMapping("/averageRatings")
+    @GetMapping("/public/averageRatings")
     public Map<Integer, Double> getAverageRatings() {
         return productService.getAverageRatings();
     }
 
-    @GetMapping("/averageRatings/{productId}")
+    @GetMapping("/public/averageRatings/{productId}")
     public Double getAverageRatingByProductId(@PathVariable int productId) {
         return productService.getAverageRatingByProductId(productId);
     }

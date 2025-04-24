@@ -95,7 +95,7 @@ public class AuthServiceImpl implements AuthService {
                 .collect(Collectors.toList());
 
         SignInResponseDto signInResponseDto = SignInResponseDto.builder()
-                .username(userDetails.getUsername())
+                .userName(userDetails.getUsername())
                 .email(userDetails.getEmail())
                 .id(userDetails.getUserId())
                 .token(jwt)

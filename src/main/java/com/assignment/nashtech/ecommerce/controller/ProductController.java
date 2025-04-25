@@ -2,8 +2,11 @@ package com.assignment.nashtech.ecommerce.controller;
 
 import com.assignment.nashtech.ecommerce.dto.ProductDTO;
 import com.assignment.nashtech.ecommerce.model.Product;
+import com.assignment.nashtech.ecommerce.response.ProductResponseDto;
 import com.assignment.nashtech.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +21,11 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/public")
-    public List<Product> getAllProduct() {
-        return productService.getAllProducts();
+    public ResponseEntity<Page<ProductResponseDto>> getAllProduct(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size) {
+        Page<ProductResponseDto> products = productService.getAllProducts(page, size);
+        return ResponseEntity.ok(products);
     }
 
     @GetMapping("/public/{productId}")
@@ -52,7 +58,7 @@ public class ProductController {
         return productService.saveProduct(productDTO);
     }
 
-    @PostMapping("/saveAllProducts")
+    @PostMapping("/public/saveAllProducts")
     public List<Product> createMultipleProducts(@RequestBody List<ProductDTO> productDTOS) {
         return productService.saveAllProducts(productDTOS);
     }

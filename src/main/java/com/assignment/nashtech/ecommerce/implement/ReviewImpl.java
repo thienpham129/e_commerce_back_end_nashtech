@@ -153,11 +153,6 @@ public class ReviewImpl implements ReviewService {
 
     /**
      * Phân trang
-     *
-     * @param productId
-     * @param page
-     * @param size
-     * @return
      */
     @Override
     public Page<ReviewResponseDto> listByProductWithPagination(int productId, int page, int size) {

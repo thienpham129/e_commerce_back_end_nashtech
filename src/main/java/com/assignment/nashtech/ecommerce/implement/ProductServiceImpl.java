@@ -6,8 +6,13 @@ import com.assignment.nashtech.ecommerce.model.Product;
 import com.assignment.nashtech.ecommerce.repository.CategoryRepository;
 import com.assignment.nashtech.ecommerce.repository.ProductRepository;
 import com.assignment.nashtech.ecommerce.repository.ReviewRepository;
+import com.assignment.nashtech.ecommerce.response.ProductResponseDto;
 import com.assignment.nashtech.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -30,8 +35,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public Page<ProductResponseDto> getAllProducts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("CreatedAt").descending());
+        Page<Product> productPage = productRepository.findAll(pageable);
+
+        return productPage.map(ProductResponseDto::new);
     }
 
     @Override

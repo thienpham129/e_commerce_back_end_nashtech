@@ -2,6 +2,8 @@ package com.assignment.nashtech.ecommerce.service;
 
 import com.assignment.nashtech.ecommerce.dto.ProductDTO;
 import com.assignment.nashtech.ecommerce.model.Product;
+import com.assignment.nashtech.ecommerce.response.ProductResponseDto;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface ProductService {
-    List<Product> getAllProducts();
+    Page<ProductResponseDto> getAllProducts(int page, int size);
 
     Optional<Product> getProductById(@PathVariable int productId);
 

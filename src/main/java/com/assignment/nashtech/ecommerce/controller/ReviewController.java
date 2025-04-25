@@ -11,6 +11,7 @@ import com.assignment.nashtech.ecommerce.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -47,7 +48,7 @@ public class ReviewController {
         return reviewService.saveReview(reviewDTO);
     }
 
-    @PostMapping("/saveAllReviews")
+    @PostMapping("public/saveAllReviews")
     public List<Review> createMultipleReviews(@RequestBody List<ReviewDTO> reviewDTOs) {
         return reviewService.saveAllReviews(reviewDTOs);
     }
@@ -70,12 +71,16 @@ public class ReviewController {
 
     @DeleteMapping("/user/{reviewId}")
     @PreAuthorize("isAuthenticated()")
-    public void delete(@PathVariable int reviewId){
+    public void delete(@PathVariable int reviewId) {
         reviewService.delete(reviewId);
     }
 
     @GetMapping("/public/user/product/{productId}")
-    public List<ReviewResponseDto> list(@PathVariable int productId){
-        return reviewService.listByProduct(productId);
+    public ResponseEntity<Page<ReviewResponseDto>> getReviewByProduct(
+            @PathVariable int productId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        Page<ReviewResponseDto> reviews = reviewService.listByProductWithPagination(productId, page, size);
+        return ResponseEntity.ok(reviews);
     }
 }

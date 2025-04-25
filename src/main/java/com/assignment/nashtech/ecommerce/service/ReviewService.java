@@ -5,6 +5,7 @@ import com.assignment.nashtech.ecommerce.model.Review;
 import com.assignment.nashtech.ecommerce.model.User;
 import com.assignment.nashtech.ecommerce.request.ReviewRequestDto;
 import com.assignment.nashtech.ecommerce.response.ReviewResponseDto;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,4 +28,6 @@ public interface ReviewService {
     void delete(int reviewId);
 
     List<ReviewResponseDto> listByProduct(int productId);
+
+    Page<ReviewResponseDto> listByProductWithPagination(int productId, int page, int size);
 }

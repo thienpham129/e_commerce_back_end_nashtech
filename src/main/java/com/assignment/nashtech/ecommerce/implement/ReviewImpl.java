@@ -13,6 +13,10 @@ import com.assignment.nashtech.ecommerce.request.ReviewRequestDto;
 import com.assignment.nashtech.ecommerce.response.ReviewResponseDto;
 import com.assignment.nashtech.ecommerce.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -140,9 +144,26 @@ public class ReviewImpl implements ReviewService {
         return ReviewResponseDto.builder()
                 .id(r.getReviewId())
                 .userId(r.getUser().getUserId())
+                .productId(r.getProduct().getProductId())
                 .rating(r.getRating())
                 .comment(r.getComment())
                 .userName(r.getUser().getUserName())
                 .build();
+    }
+
+    /**
+     * Phân trang
+     *
+     * @param productId
+     * @param page
+     * @param size
+     * @return
+     */
+    @Override
+    public Page<ReviewResponseDto> listByProductWithPagination(int productId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<Review> reviewPage = reviewRepository.findByProduct_ProductId(productId, pageable);
+
+        return reviewPage.map(ReviewResponseDto::new);
     }
 }

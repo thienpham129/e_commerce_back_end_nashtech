@@ -3,6 +3,8 @@ package com.assignment.nashtech.ecommerce.repository;
 import com.assignment.nashtech.ecommerce.model.Product;
 import com.assignment.nashtech.ecommerce.model.Review;
 import com.assignment.nashtech.ecommerce.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,5 +22,8 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     Optional<Review> findByUserAndProduct(User user, Product product);
 
     Optional<Review> findByUserUserIdAndProductProductId(int userId, int productId);
+
     List<Review> findByProductProductId(int productId);
+
+    Page<Review> findByProduct_ProductId(int productId, Pageable pageable);
 }

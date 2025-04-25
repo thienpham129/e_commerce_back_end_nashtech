@@ -3,18 +3,24 @@ package com.assignment.nashtech.ecommerce.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "Reviews")
 public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int reviewId;
+    private Integer reviewId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -43,17 +49,7 @@ public class Review {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public Review() {
-    }
-
-    public Review(int reviewId, User user, Product product, int rating, String comment, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.reviewId = reviewId;
-        this.user = user;
-        this.product = product;
-        this.rating = rating;
-        this.comment = comment;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    public Review(User user, Product product, int rating, Object comment) {
     }
 
     public int getReviewId() {

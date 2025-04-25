@@ -2,6 +2,9 @@ package com.assignment.nashtech.ecommerce.service;
 
 import com.assignment.nashtech.ecommerce.dto.ReviewDTO;
 import com.assignment.nashtech.ecommerce.model.Review;
+import com.assignment.nashtech.ecommerce.model.User;
+import com.assignment.nashtech.ecommerce.request.ReviewRequestDto;
+import com.assignment.nashtech.ecommerce.response.ReviewResponseDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,4 +21,10 @@ public interface ReviewService {
     Review updateReviewById(int reviewId, ReviewDTO reviewDTO);
 
     void deleteReviewById(int reviewId);
+
+    ReviewResponseDto createOrUpdate(int productId, ReviewRequestDto dto);
+
+    void delete(int reviewId);
+
+    List<ReviewResponseDto> listByProduct(int productId);
 }
